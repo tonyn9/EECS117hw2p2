@@ -67,7 +67,6 @@ main (int argc, char* argv[])
   printf("I am %d of %d\n", rank, size);
 
 
-
   // finish MPI block
   MPI_Finalize();
 
