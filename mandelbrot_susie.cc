@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <mpi.h>
 
 
 // given mandelbrot function
@@ -53,6 +54,24 @@ main (int argc, char* argv[])
   double jt = (maxX - minX)/width;
   double x, y;
 
+  // initialize MPI (from lecture)
+  MPI_Init(&argc, &argv);
+
+  // rank = process id 
+  // size = number of processors
+  int rank, size;
+
+  MPI_Comm_rank ( MPI_COMM_WORLD, &rank);
+  MPI_Comm_size ( MPI_COMM_WORLD, &size);
+
+  printf("I am %d of %d\n", rank, size);
+
+
+
+  // finish MPI block
+  MPI_Finalize();
+
+  return 0;
 }
 
 /* eof */
