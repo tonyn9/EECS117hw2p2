@@ -91,7 +91,15 @@ main (int argc, char* argv[])
   // if this is per process i need to synch it
   MPI_Barrier(MPI_COMM_WORLD);
 
+  // need to gather data from the processes to root process
+  
+  //MPI_Gather();
 
+
+  // root process makes image
+  if (rank == 0){
+
+  }
 
   // finish MPI block
   MPI_Finalize();
