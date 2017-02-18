@@ -38,6 +38,7 @@ main (int argc, char* argv[])
   double maxX = 0.7;
   double minY = -1.25;
   double maxY = 1.25;
+  int i , j;
 
   int height, width;
   if(argc == 3){
@@ -65,6 +66,31 @@ main (int argc, char* argv[])
   MPI_Comm_size ( MPI_COMM_WORLD, &size);
 
   printf("I am %d of %d\n", rank, size);
+
+  // how does susie work?
+  // ex on a 10 process program
+  // rank 0 does row 0, 10, 20, 30...
+  // rank 1 does row 1, 11, 21, 31...
+  // rank 2 does row 2, 12, 22, 32...
+  // ...
+  int RowsperThread = (height/size);
+
+
+  // implement example based on serial
+  // this is per process
+  y = minY;  
+  for( i = rank; i < height; i += size){
+    x = minX;
+    for (j = 0; j < width; ++j){
+      img_view(j, i) = render(mandelbrot(x,y)/512.0);
+      x += jt;
+    }
+    y += it;
+  }
+
+  // if this is per process i need to synch it
+  MPI_Barrier(MPI_COMM_WORLD);
+
 
 
   // finish MPI block
