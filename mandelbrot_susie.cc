@@ -82,14 +82,16 @@ main (int argc, char* argv[])
 
   // implement example based on serial
   // this is per process
-  y = minY;  
+  y = minY + (rank * it);  
+  int row = 0;
   for( i = rank; i < height; i += size){
     x = minX;
     for (j = 0; j < width; ++j){
-      img_view(j, i) = render(mandelbrot(x,y)/512.0);
+      SendBuffer [(row * width) + j] = mandelbrot(x,y);
       x += jt;
     }
-    y += it;
+    y += (it*size);
+    row +=1;
   }
 
   // if this is per process i need to synch it
@@ -102,7 +104,7 @@ main (int argc, char* argv[])
     int ReceiveBuffer [height*width];
   }
   
-  //MPI_Gather(SendBuffer, Scount, MPI_INT, Rbuffer, Rcount, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Gather(SendBuffer, RowsperThread*width, MPI_INT, ReceiveBuffer, RowsperThread*width, MPI_INT, 0, MPI_COMM_WORLD);
 
 
   // root process makes image
