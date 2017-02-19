@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <time.h>
 
 #include "render.hh"
 
@@ -53,6 +54,11 @@ main(int argc, char* argv[]) {
   double jt = (maxX - minX)/width;
   double x, y;
 
+  // calculates the time for serial
+  time_t start, stop;
+  clock_t ticks; long count;
+
+  time(&start);
 
   gil::rgb8_image_t img(height, width);
   auto img_view = gil::view(img);
@@ -66,6 +72,11 @@ main(int argc, char* argv[]) {
     }
     y += it;
   }
+
+  time(&stop);
+  printf("Used %0.2f seconds of CPU time. \n", (double)ticks/CLOCKS_PER_SEC);
+  printf("Finished in about %f seconds. \n", difftime(stop,start));
+
   gil::png_write_view("mandelbrot.png", const_view(img));
 }
 
