@@ -107,7 +107,50 @@ main (int argc, char* argv[])
   {
     final_image[i] = new float[width];
   }
+  //Mandelbrot parallel code here
+  float *local_mandelbrot_values = new float[(height*width)/np];
+  y = minY + rank*(height/np)*it;
+  for(int i = 0; i < height/np; ++i)
+  {
+    x = minX;
+    for(int j = 0; j < width; ++j)
+    {
+      local_mandelbrot_values[i*width+j] = (mandelbrot(x,y)/512.0);
+      x += jt;
+    }
+    y += it;
+  }
+ //Gathering
+  MPI_Gather(local_mandelbrot_values, (height/np)*width, MPI_FLOAT, recv_buffer, (height/np)*width, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
+  if(rank == 0)
+  {
+    for (int i = 0; i < height; ++i)
+    {
+      for (int j = 0; j < width; ++j)
+      {
+        final_image[i][j] = recv_buffer[i*width+j];
+        img_view(j, i) = render(final_image[i][j]);
+      }
+    }
+    char *filename = new char[50];
+    sprintf(filename, "mandelbrot_joe_%d_%dx%d.png", np, height, width);
+    gil::png_write_view(filename, const_view(img));
+  }
+
+  //finalize
+  MPI_Finalize();
+
+  long double elap_time = stopwatch_stop (timer);
+  stopwatch_destroy (timer);
+  if(rank == 0)
+  {
+    printf ("Time: %Lg seconds",elap_time);
+    printf("Generating image of size %dx%d using %d processes\n", height, width, np);
+    printf("Mandelbrot Image Generation using Joe Block's Logic finished!\n\n");
+  }
+  return 0;
+}
 
   /* Lucky you, you get to write MPI code */
 }
