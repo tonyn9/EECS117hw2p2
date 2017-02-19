@@ -4,6 +4,7 @@
  *  \brief Implement your parallel mandelbrot set in this file.
  */
 
+ //https://piazza-resources.s3.amazonaws.com/ixjucpwhwnp4i7/iyq2tknn3s04aj/mpi.pdf?AWSAccessKeyId=AKIAIEDNRLJ4AZKBW6HA&Expires=1487553270&Signature=XXEzyHKB3uNgNoW%2Fb2YNEauDCaQ%3D
 #include <iostream>
 #include <cstdlib>
 #include <mpi.h>
@@ -95,6 +96,17 @@ main (int argc, char* argv[])
   double it = (maxY - minY)/height;
   double jt = (maxX - minX)/width;
   double x, y;
+
+  gil::rgb8_image_t img(height, width);
+  auto img_view = gil::view(img);
+
+  //Creating a receiver buffer and receives buffer size
+  float **final_image = new float *[height];
+  float *recv_buffer = new float [width*height];
+  for(int i = 0; i < height; i++)
+  {
+    final_image[i] = new float[width];
+  }
 
 
   /* Lucky you, you get to write MPI code */
