@@ -65,7 +65,7 @@ main (int argc, char* argv[])
   MPI_Comm_rank ( MPI_COMM_WORLD, &rank);
   MPI_Comm_size ( MPI_COMM_WORLD, &size);
 
-  printf("I am %d of %d\n", rank, size);
+  //printf("I am %d of %d\n", rank, size);
 
   // how does susie work?
   // ex on a 10 process program
@@ -77,6 +77,8 @@ main (int argc, char* argv[])
   // need to get the ceiling of a height/size
   int RowsperThread = (int) ceil( ( (double) height/size));
 
+  // create a send buffer
+  int SendBuffer[RowsperThread*width];
 
   // implement example based on serial
   // this is per process
@@ -94,8 +96,13 @@ main (int argc, char* argv[])
   MPI_Barrier(MPI_COMM_WORLD);
 
   // need to gather data from the processes to root process
+
+  //make a buffer for root process
+  if (rank == 0){
+    int ReceiveBuffer [height*width];
+  }
   
-  //MPI_Gather();
+  //MPI_Gather(SendBuffer, Scount, MPI_INT, Rbuffer, Rcount, MPI_INT, 0, MPI_COMM_WORLD);
 
 
   // root process makes image
