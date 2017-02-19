@@ -73,7 +73,9 @@ main (int argc, char* argv[])
   // rank 1 does row 1, 11, 21, 31...
   // rank 2 does row 2, 12, 22, 32...
   // ...
-  int RowsperThread = (height/size);
+
+  // need to get the ceiling of a height/size
+  int RowsperThread = (int) ceil( ( (double) height/size));
 
 
   // implement example based on serial
@@ -98,6 +100,21 @@ main (int argc, char* argv[])
 
   // root process makes image
   if (rank == 0){
+
+    gil::rgb8_image_t img(height,width);
+    auto img_view = gil::view(img);
+
+
+    for ( i = 0; i < height; ++i){
+      x = minX;
+      for (j = 0; j < width; ++jk){
+        img_view(j, i) = render(mandelbrot(x,y)/512.0);
+        x += jt;
+      }
+      y += it;
+    }
+
+    gil::png_write_view("mandelbrot.png", const_view(img));
 
   }
 
