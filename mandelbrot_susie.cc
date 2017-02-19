@@ -22,7 +22,7 @@ int mandelbrot(double x, double y){
     newx = x*x - y*y + cx;
     newy = 2*x*y + cy;
     x = newx;
-    y = newyl
+    y = newy;
   }
   return it;
 }
@@ -45,7 +45,7 @@ main (int argc, char* argv[])
   if(argc == 3){
     height = atoi (argv[1]);
     width = atoi (argv[2]);
-    assert (height > 0 && width 0);
+    assert (height > 0 && width > 0);
   } else{
     fprintf (stderr, "usage: %s <height> <width>\n", argv[0]);
     fprintf (stderr, "where <height> and <width> are the dimensions of the image.\n");
@@ -121,12 +121,12 @@ main (int argc, char* argv[])
     for ( i = 0; i < height; ++i){
       for (j = 0; j < width; ++j){
         ProcessorIndex = (j % size) * ProcLength; 
-        img_view(j, i) = render(ReceiveBuffer[ProcessorIndex + (RowIndex*width) + p]/512.0);
+        img_view(j, i) = render(ReceiveBuffer[ProcessorIndex + (RowIndex*width) + j]/512.0);
       }
       RowIndex = j / size;
     }
 
-    gil::png_write_view("mandelbrot.png", const_view(img));
+    gil::png_write_view("mandelbrot-susie.png", const_view(img));
 
   }
 
