@@ -7,10 +7,16 @@
 #include <iostream>
 #include <cstdlib>
 #include <mpi.h>
-
+#include <string>
+#include <math.h>
 #include "timer.c"
 #include "render.hh"
 
+//make substitutions throughout the file in which it is located
+#define WIDTH 1000
+#define HEIGHT 1000
+
+using namespace std;
 
 /*
 Intern Joe Block implements the above computation with P MPI processes as well. His strategy
@@ -18,7 +24,6 @@ is to make process p compute all of the (valid) rows pN, pN + 1, pN + 2,...pN + 
 where N = bheight/Pc and then use MPI gather to collect all of the values at the root process for
 rendering the fractal.
 */
-
 
 
 int
@@ -83,6 +88,15 @@ main (int argc, char* argv[])
      fprintf (stderr, "where <height> and <width> are the dimensions of the image.\n");
      return -1;
     }
+  //Rounding up value of height and width
+  height = round((float)height/(float)np) * np;
+  width = round((float)width/(float)np) * np;
+
+  double it = (maxY - minY)/height;
+  double jt = (maxX - minX)/width;
+  double x, y;
+
+
   /* Lucky you, you get to write MPI code */
 }
 
