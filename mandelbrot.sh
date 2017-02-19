@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -N Mandelbrot
-#$ -q eecs117
+#$ -q eecs117, pub8i
 #$ -pe mpi 64
 #$ -R y
 
@@ -16,5 +16,8 @@ module load boost/1.57.0
 # Module load OpenMPI
 module load openmpi-1.8.3/gcc-4.9.2
 
+#run the serial program
+mpirun -np 1 ./mandelbrot_serial 1000 1000
+
 # Run the program 
-mpirun -np 64  ./mandelbrot_serial 1000 1000
+mpirun -np 64  ./mandelbrot_susie 1000 1000
