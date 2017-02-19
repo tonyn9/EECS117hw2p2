@@ -101,9 +101,11 @@ main (int argc, char* argv[])
 
   // need to gather data from the processes to root process
 
-  //make a buffer for root process
+  // make a buffer for root process
+  // needs a reference for all it seems
+  int* ReceiveBuffer = NULL;
   if (rank == 0){
-    int ReceiveBuffer [ProcLength * size];
+    ReceiveBuffer = new int [ProcLength * size];
   }
   
   MPI_Gather(SendBuffer,  ProcLength, MPI_INT, ReceiveBuffer,  ProcLength, MPI_INT, 0, MPI_COMM_WORLD);
