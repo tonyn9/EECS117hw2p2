@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <mpi.h>
+#include "render.hh"
 
 
 // given mandelbrot function
