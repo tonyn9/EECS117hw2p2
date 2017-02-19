@@ -102,10 +102,10 @@ main (int argc, char* argv[])
 
   //make a buffer for root process
   if (rank == 0){
-    int ReceiveBuffer [height*width];
+    int ReceiveBuffer [ProcLength * size];
   }
   
-  MPI_Gather(SendBuffer, RowsperThread*width, MPI_INT, ReceiveBuffer, RowsperThread*width, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Gather(SendBuffer,  ProcLength, MPI_INT, ReceiveBuffer,  ProcLength, MPI_INT, 0, MPI_COMM_WORLD);
 
 
   // root process makes image
