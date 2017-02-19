@@ -78,6 +78,7 @@ main (int argc, char* argv[])
   int RowsperThread = (int) ceil( ( (double) height/size));
 
   // create a send buffer
+  int ProcLength = RowsperThread*width;
   int SendBuffer[RowsperThread*width];
 
   // implement example based on serial
@@ -113,14 +114,15 @@ main (int argc, char* argv[])
     gil::rgb8_image_t img(height,width);
     auto img_view = gil::view(img);
 
-
+    // need to get index and row from a 1d array
+    int ProcessorIndex = 0;
+    int RowIndex = 0;
     for ( i = 0; i < height; ++i){
-      x = minX;
-      for (j = 0; j < width; ++jk){
-        img_view(j, i) = render(mandelbrot(x,y)/512.0);
-        x += jt;
+      for (j = 0; j < width; ++j){
+        ProcessorIndex = (j % size) * ProcLength; 
+        img_view(j, i) = render(ReceiveBuffer[ProcessorIndex + (RowIndex*width) + p]/512.0);
       }
-      y += it;
+      RowIndex = j / size;
     }
 
     gil::png_write_view("mandelbrot.png", const_view(img));
