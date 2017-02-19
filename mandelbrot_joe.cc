@@ -19,6 +19,8 @@ where N = bheight/Pc and then use MPI gather to collect all of the values at the
 rendering the fractal.
 */
 
+
+
 int
 mandelbrot(double x, double y)
 {
@@ -40,8 +42,47 @@ mandelbrot(double x, double y)
 }
 
 }
+int
 main (int argc, char* argv[])
 {
+  struct stopwatch_t* timer;
+  timer = stopwatch_create ();
+  stopwatch_init ();
+  stopwatch_start (timer);
+
+  //MPI Initialization
+  int rank=0, np=0, namelen=0;
+  char hostname[MPI_MAX_PROCESSOR_NAME+1];
+
+  MPI_Init (&argc, &argv);	/* starts MPI */
+  MPI_Comm_rank (MPI_COMM_WORLD, &rank);	/* Get process id */
+  MPI_Comm_size (MPI_COMM_WORLD, &np);	/* Get number of processes */
+  MPI_Get_processor_name (hostname, &namelen); /* Get hostname of node */
+
+  if(rank == 0)
+  {
+    printf("Mandelbrot Image Using Joe's Logic is Starting Now!\n");
+  }
+
+  //Mandelbrot Code
+  double minX = -2.1;
+  double maxX = 0.7;
+  double minY = -1.25;
+  double maxY = 1.25;
+
+  int height, width;
+  if (argc == 3)
+    {
+     height = atoi (argv[1]);
+     width = atoi (argv[2]);
+     assert (height > 0 && width > 0);
+    }
+  else
+    {
+     fprintf (stderr, "usage: %s <height> <width>\n", argv[0]);
+     fprintf (stderr, "where <height> and <width> are the dimensions of the image.\n");
+     return -1;
+    }
   /* Lucky you, you get to write MPI code */
 }
 
