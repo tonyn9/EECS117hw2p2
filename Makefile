@@ -32,4 +32,7 @@ mandelbrot_ms$(EXEEXT): mandelbrot_ms.cc $(SRCS_COMMON) $(DEPS_COMMON)
 clean:
 	rm -f $(TARGETS) 
 
+clean-all:
+	rm -f $(TARGETS) *.png
+
 # eof
