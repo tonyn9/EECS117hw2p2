@@ -85,7 +85,7 @@ main (int argc, char* argv[])
   // ...
 
   // need to get the ceiling of a height/size
-  int RowsperThread = height/size + 1;
+  int RowsperThread = (height/size) + 1;
 
   // create a send buffer
   int ProcLength = RowsperThread * width;
