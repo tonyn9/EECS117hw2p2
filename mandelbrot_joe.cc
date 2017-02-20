@@ -133,7 +133,7 @@ main (int argc, char* argv[])
       }
     }
     char *filename = new char[50];
-    sprintf(filename, "mandelbrot_joe_%d_%dx%d.png", np, height, width);
+    sprintf(filename, "mandelbrot_joe.png");
     gil::png_write_view(filename, const_view(img));
   }
 
