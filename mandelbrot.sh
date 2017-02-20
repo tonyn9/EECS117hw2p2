@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -N Mandelbrot
-#$ -q eecs117, pub8i
+#$ -q eecs117,pub8i
 #$ -pe mpi 64
 #$ -R y
 
