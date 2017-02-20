@@ -182,7 +182,7 @@ int master(double minX, double maxX, double minY, double maxY, double it, double
 
 
   printf("Finished in about %f seconds. \n", MPI_Wtime()-start);
-  gil::png_write_view("mandelbrot-ms.png", const_view(img));
+  gil::png_write_view("mandelbrot_ms.png", const_view(img));
 
   return 0;
 }
