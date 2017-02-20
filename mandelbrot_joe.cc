@@ -50,10 +50,6 @@ mandelbrot(double x, double y)
 int
 main (int argc, char* argv[])
 {
-  stopwatch_init ();
-  struct stopwatch_t* timer;
-  timer = stopwatch_create ();
-  stopwatch_start (timer);
 
   //MPI Initialization
   int rank=0, np=0, namelen=0;
@@ -147,8 +143,8 @@ main (int argc, char* argv[])
   
   if(rank == 0)
   {
-    stop = MPI_Wtime() - start;
-    printf ("Time: %Lg seconds",stop);
+    end = MPI_Wtime() - start;
+    printf ("Time: %Lg seconds", end);
     printf("Generating image of size %dx%d using %d processes\n", height, width, np);
     printf("Mandelbrot Image Generation using Joe Block's Logic finished!\n\n");
   }
