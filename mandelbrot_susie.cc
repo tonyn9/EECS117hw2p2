@@ -10,6 +10,34 @@
 #include <math.h>
 #include "render.hh"
 
+// rank = process id 
+// size = number of processors
+int rank, size;
+
+ int mpiInit(int argc, char**argv){
+   if (MPI_Init(&argc, &argv) != MPI_SUCCESS){
+     fprintf(stderr, "Failure in initialization\n");
+     return 100;
+   }
+
+   if (MPI_Comm_size(MPI_COMM_WORLD, &size) != MPI_SUCCESS){
+     fprintf(stderr, "Could not get process count\n");
+     MPI_Finalize();
+     return 101;
+   }else if (size < 2){
+     fprintf(stderr, "Must have at least 2 process\n");
+     MPI_Finalize();
+     return 102;
+   }
+
+   if (MPI_Comm_rank(MPI_COMM_WORLD, &rank) != MPI_SUCCESS){
+     fprintf(stderr, "Could not get rank of process\n");
+     return 103;
+   }
+
+   return 0;
+
+ }
 
 // given mandelbrot function
 int mandelbrot(double x, double y){
@@ -57,17 +85,12 @@ main (int argc, char* argv[])
   double jt = (maxX - minX)/width;
   double x, y;
 
-  // initialize MPI (from lecture)
-  MPI_Init(&argc, &argv);
+   // initialize MPI
+  if (mpi_Init(argc, argv)){
+    fprintf(stderr, "Could not init MPI\n");
+    return 10;
+  }
 
-  
-
-  // rank = process id 
-  // size = number of processors
-  int rank, size;
-
-  MPI_Comm_rank ( MPI_COMM_WORLD, &rank);
-  MPI_Comm_size ( MPI_COMM_WORLD, &size);
 
   //get timer
   double start, end;
