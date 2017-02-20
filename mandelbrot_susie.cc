@@ -97,7 +97,7 @@ main (int argc, char* argv[])
 
   if(rank == 0){
     start = MPI_Wtime();
-    printf("Number of threads: %d\n", size);
+    printf("Number of processes: %d\n", size);
   }
   
   // how does susie work?
