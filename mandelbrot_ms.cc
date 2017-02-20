@@ -44,8 +44,6 @@ int mpiInit(int argc, char**argv){
     return 103;
   }
 
-  printf("Number of processes: %d\n", size);
-
   return 0;
 
 }
@@ -224,6 +222,7 @@ main (int argc, char* argv[])
 
   // master goes here
   if (rank == 0){
+      printf("Number of processes: %d\n", size);
       master(minX, maxX, minY, maxY, it, jt, height, width);
   }else{ // slave goes here
       slave(minX, maxX, minY, maxY, it, jt, height, width);
