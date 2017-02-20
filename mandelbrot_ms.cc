@@ -43,6 +43,8 @@ int mpiInit(int argc, char**argv){
     return 103;
   }
 
+  printf("Number of processes: %d\n", size);
+
   return 0;
 
 }
@@ -69,6 +71,19 @@ int mandelbrot(double x, double y){
 // when finished, return the data
 int slave(double minX, double maxX, double minY, double maxY, double it, double jt, int height, int width){
 
+  // process can finish before other process
+  // need to communicate which row it finished
+  // without needing to use another send and recieve
+
+  // create buffer + row#
+  int SendBuffer[width + 1];
+
+
+  double x,y;
+
+  //
+
+
 
   return 0;
 }
@@ -76,6 +91,13 @@ int slave(double minX, double maxX, double minY, double maxY, double it, double 
 // gives work out to other process and collects data at the same time
 int master(double minX, double maxX, double minY, double maxY, double it, double jt, int height, int width){
 
+
+
+  // create image buffer
+  int ImageBuffer [height * width];
+
+  // create recieve buffer + row#
+  int RecieveBuffer [width + 1];
 
   return 0;
 }
