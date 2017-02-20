@@ -79,6 +79,9 @@ int slave(double minX, double maxX, double minY, double maxY, double it, double 
   // create buffer + row#
   int SendBuffer[width + 1];
 
+  // create MPI status
+  MPI_Status = status;
+
   int row;
   double x,y;
 
@@ -91,9 +94,8 @@ int slave(double minX, double maxX, double minY, double maxY, double it, double 
 
     // if finished
     if(status.MPI_TAG == finish_tag){
-      return;
+      return 0;
     }else if(status.MPI_TAG == not_enough_tag){ // if not enough rows
-      SendBuffer = {0};
       MPI_Send(SendBuffer, width + 1, MPI_INT, 0, not_enough_tag, MPI_COMM_WORLD);
     } else{ // if there's rows to do
       y = minY + (row *it);
@@ -147,7 +149,7 @@ int master(double minX, double maxX, double minY, double maxY, double it, double
   // recieve the process and give more work
   while(row < height){
     MPI_Recv(RecieveBuffer, width + 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-    MPI_Send(&row, 1, MPI_int, status.MPI_SOURCE, data_tag, MPI_COMM_WORLD);
+    MPI_Send(&row, 1, MPI_INT, status.MPI_SOURCE, data_tag, MPI_COMM_WORLD);
 
     //store result into image buffer
     memcpy(ImageBuffer + (RecieveBuffer[width] * width), RecieveBuffer, width*sizeof(int));
@@ -212,7 +214,7 @@ main (int argc, char* argv[])
   double x, y;
 
   // initialize MPI
-  if (mpi_Init(argc, argv)){
+  if (mpiInit(argc, argv)){
     fprintf(stderr, "Could not init MPI\n");
     return 10;
   }
