@@ -59,6 +59,13 @@ main (int argc, char* argv[])
   // initialize MPI (from lecture)
   MPI_Init(&argc, &argv);
 
+  //get timer
+  double start, end;
+
+  if(rank == 0){
+    start = MPI_Wtime();
+  }
+
   // rank = process id 
   // size = number of processors
   int rank, size;
@@ -76,7 +83,7 @@ main (int argc, char* argv[])
   // ...
 
   // need to get the ceiling of a height/size
-  int RowsperThread = (int) ceil( ( (double) height/size));
+  int RowsperThread = height/size + 1;
 
   // create a send buffer
   int ProcLength = RowsperThread*width;
@@ -127,6 +134,8 @@ main (int argc, char* argv[])
       }
       RowIndex = i / size;
     }
+
+    printf("Finished in about %f seconds. \n", MPI_Wtime()-start);
 
     gil::png_write_view("mandelbrot-susie.png", const_view(img));
 
