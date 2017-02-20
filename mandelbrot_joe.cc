@@ -51,9 +51,9 @@ mandelbrot(double x, double y)
 int
 main (int argc, char* argv[])
 {
+  stopwatch_init ();
   struct stopwatch_t* timer;
   timer = stopwatch_create ();
-  stopwatch_init ();
   stopwatch_start (timer);
 
   //MPI Initialization
