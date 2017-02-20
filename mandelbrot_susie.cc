@@ -85,10 +85,10 @@ main (int argc, char* argv[])
   // ...
 
   // need to get the ceiling of a height/size
-  int RowsperThread = (int) ceil( ( (double) height/size));
+  int RowsperThread = height/size + 1;
 
   // create a send buffer
-  int ProcLength = RowsperThread*width;
+  int ProcLength = RowsperThread * width;
   int SendBuffer[ProcLength];
 
   // implement example based on serial
