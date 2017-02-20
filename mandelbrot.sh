@@ -16,8 +16,22 @@ module load boost/1.57.0
 # Module load OpenMPI
 module load openmpi-1.8.3/gcc-4.9.2
 
+
+echo "Script began:" `date`
+echo "Node:" `hostname`
+echo "Current directory: ${PWD}"
+
+echo ""
+echo "=== Starting mandelbrot_serial==="
 # run the serial program
 mpirun -np 1 ./mandelbrot_serial 1000 1000
 
+
+echo ""
+echo "=== Starting mandelbrot_susie==="
 # Run the program 
 mpirun -np 64  ./mandelbrot_susie 1000 1000
+
+
+echo ""
+echo "=== Done! ==="
