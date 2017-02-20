@@ -86,7 +86,7 @@ main (int argc, char* argv[])
   double x, y;
 
    // initialize MPI
-  if (mpi_Init(argc, argv)){
+  if (mpiInit(argc, argv)){
     fprintf(stderr, "Could not init MPI\n");
     return 10;
   }
