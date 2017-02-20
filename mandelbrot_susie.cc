@@ -59,12 +59,7 @@ main (int argc, char* argv[])
   // initialize MPI (from lecture)
   MPI_Init(&argc, &argv);
 
-  //get timer
-  double start, end;
-
-  if(rank == 0){
-    start = MPI_Wtime();
-  }
+  
 
   // rank = process id 
   // size = number of processors
@@ -73,8 +68,13 @@ main (int argc, char* argv[])
   MPI_Comm_rank ( MPI_COMM_WORLD, &rank);
   MPI_Comm_size ( MPI_COMM_WORLD, &size);
 
-  //printf("I am %d of %d\n", rank, size);
+  //get timer
+  double start, end;
 
+  if(rank == 0){
+    start = MPI_Wtime();
+  }
+  
   // how does susie work?
   // ex on a 10 process program
   // rank 0 does row 0, 10, 20, 30...
