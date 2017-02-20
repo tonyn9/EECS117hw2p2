@@ -10,7 +10,6 @@
 #include <mpi.h>
 #include <string>
 #include <math.h>
-#include "timer.h"
 #include "render.hh"
 
 //make substitutions throughout the file in which it is located
@@ -65,8 +64,12 @@ main (int argc, char* argv[])
   MPI_Comm_size (MPI_COMM_WORLD, &np);	/* Get number of processes */
   MPI_Get_processor_name (hostname, &namelen); /* Get hostname of node */
 
+  //get timer
+  double start, end;
+
   if(rank == 0)
   {
+    start = MPI_Wtime();
     printf("Mandelbrot Image Using Joe's Logic is Starting Now!\n");
   }
 
@@ -141,11 +144,11 @@ main (int argc, char* argv[])
   //finalize
   MPI_Finalize();
 
-  long double elap_time = stopwatch_stop (timer);
-  stopwatch_destroy (timer);
+  
   if(rank == 0)
   {
-    printf ("Time: %Lg seconds",elap_time);
+    stop = MPI_Wtime() - start;
+    printf ("Time: %Lg seconds",stop);
     printf("Generating image of size %dx%d using %d processes\n", height, width, np);
     printf("Mandelbrot Image Generation using Joe Block's Logic finished!\n\n");
   }
