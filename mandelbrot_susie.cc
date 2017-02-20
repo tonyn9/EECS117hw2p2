@@ -112,7 +112,7 @@ main (int argc, char* argv[])
 
   // make a buffer for root process
   // needs a reference for all it seems
-  int* ReceiveBuffer = NULL;
+  int * ReceiveBuffer = NULL;
   if (rank == 0){
     ReceiveBuffer = new int [ProcLength * size];
   }
