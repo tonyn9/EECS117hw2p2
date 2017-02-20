@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <mpi.h>
+#include <math.h>
 #include "render.hh"
 
 
@@ -73,6 +74,7 @@ main (int argc, char* argv[])
 
   if(rank == 0){
     start = MPI_Wtime();
+    printf("Number of threads: %d\n", size);
   }
   
   // how does susie work?
@@ -83,11 +85,11 @@ main (int argc, char* argv[])
   // ...
 
   // need to get the ceiling of a height/size
-  int RowsperThread = height/size + 1;
+  int RowsperThread = (int) ceil( ( (double) height/size));
 
   // create a send buffer
   int ProcLength = RowsperThread*width;
-  int SendBuffer[RowsperThread*width];
+  int SendBuffer[ProcLength];
 
   // implement example based on serial
   // this is per process
@@ -115,7 +117,7 @@ main (int argc, char* argv[])
     ReceiveBuffer = new int [ProcLength * size];
   }
   
-  MPI_Gather(SendBuffer,  ProcLength, MPI_INT, ReceiveBuffer,  ProcLength, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Gather(SendBuffer, ProcLength, MPI_INT, ReceiveBuffer, ProcLength, MPI_INT, 0, MPI_COMM_WORLD);
 
 
   // root process makes image
