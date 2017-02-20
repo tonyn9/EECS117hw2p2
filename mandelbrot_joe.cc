@@ -10,7 +10,7 @@
 #include <mpi.h>
 #include <string>
 #include <math.h>
-#include "timer.c"
+#include "timer.h"
 #include "render.hh"
 
 //make substitutions throughout the file in which it is located
@@ -47,7 +47,7 @@ mandelbrot(double x, double y)
   return it;
 }
 
-}
+
 int
 main (int argc, char* argv[])
 {
@@ -153,6 +153,6 @@ main (int argc, char* argv[])
 }
 
   /* Lucky you, you get to write MPI code */
-}
+
 
 /* eof */
