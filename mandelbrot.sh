@@ -22,14 +22,22 @@ echo "Node:" `hostname`
 echo "Current directory: ${PWD}"
 
 echo ""
-echo "=== Starting mandelbrot_serial==="
+echo "=== Starting mandelbrot_serial ==="
 # run the serial program
 mpirun -np 1 ./mandelbrot_serial 1000 1000
 
+echo ""
+echo "=== Starting mandelbrot_joe ==="
+echo ""
 
 echo ""
-echo "=== Starting mandelbrot_susie==="
+echo " threads: 64 "
+# Run the program 
+mpirun -np 64  ./mandelbrot_joe 1000 1000
+
 echo ""
+echo "=== Starting mandelbrot_susie ==="
+# echo ""
 # echo " threads: 4 "
 # # Run the program 
 # mpirun -np 4  ./mandelbrot_susie 1000 1000
