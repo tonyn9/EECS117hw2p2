@@ -122,10 +122,10 @@ main (int argc, char* argv[])
     int RowIndex = 0;
     for ( i = 0; i < height; ++i){
       for (j = 0; j < width; ++j){
-        ProcessorIndex = (j % size) * ProcLength; 
+        ProcessorIndex = (i % size) * ProcLength; 
         img_view(j, i) = render(ReceiveBuffer[ProcessorIndex + (RowIndex*width) + j]/512.0);
       }
-      RowIndex = j / size;
+      RowIndex = i / size;
     }
 
     gil::png_write_view("mandelbrot-susie.png", const_view(img));
