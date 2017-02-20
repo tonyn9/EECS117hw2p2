@@ -33,6 +33,6 @@ clean:
 	rm -f $(TARGETS) 
 
 clean-all:
-	rm -f $(TARGETS) *.png
+	rm -f $(TARGETS) *.png *.e* *.o*
 
 # eof
