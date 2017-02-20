@@ -144,7 +144,7 @@ main (int argc, char* argv[])
   if(rank == 0)
   {
     end = MPI_Wtime() - start;
-    printf ("Time: %f seconds", end);
+    printf ("Time: %f seconds. \n", end);
     printf("Generating image of size %dx%d using %d processes\n", height, width, np);
     printf("Mandelbrot Image Generation using Joe Block's Logic finished!\n\n");
   }
