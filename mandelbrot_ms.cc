@@ -18,7 +18,7 @@ int rank, size;
 // these are mapped out to integers
 enum {
   finish_tag, // no more work for slaves
-  data_tag // more work for slaves
+  data_tag, // more work for slaves
   not_enough_tag // more processes than rows
 };
 
