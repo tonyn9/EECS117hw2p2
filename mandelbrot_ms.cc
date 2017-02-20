@@ -80,7 +80,7 @@ int slave(double minX, double maxX, double minY, double maxY, double it, double 
   int SendBuffer[width + 1];
 
   // create MPI status
-  MPI_Status = status;
+  MPI_Status status;
 
   int row;
   double x,y;
