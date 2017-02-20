@@ -19,6 +19,7 @@ int rank, size;
 enum {
   finish_tag, // no more work for slaves
   data_tag // more work for slaves
+  not_enough_tag // more processes than rows
 };
 
 
@@ -78,7 +79,7 @@ int slave(double minX, double maxX, double minY, double maxY, double it, double 
   // create buffer + row#
   int SendBuffer[width + 1];
 
-
+  int row;
   double x,y;
 
   // get row to work on
@@ -86,7 +87,26 @@ int slave(double minX, double maxX, double minY, double maxY, double it, double 
   // send row to root process
 
   while(true){
-    
+    MPI_Recv(&row, 1, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+
+    // if finished
+    if(status.MPI_TAG == finish_tag){
+      return;
+    }else if(status.MPI_TAG == not_enough_tag){ // if not enough rows
+      SendBuffer = {0};
+      MPI_Send(SendBuffer, width + 1, MPI_INT, 0, not_enough_tag, MPI_COMM_WORLD);
+    } else{ // if there's rows to do
+      y = minY + (row *it);
+      x = minX;
+      int i;
+      for (i = 0; i < width; ++i){
+        SendBuffer[i] = mandelbrot(x,y);
+        x += jt;
+      }
+      SendBuffer[width] = row;
+      MPI_Send(SendBuffer, width+1, MPI_INT, 0, data_tag, MPI_COMM_WORLD);
+    }
+
   }
 
 
@@ -106,31 +126,61 @@ int master(double minX, double maxX, double minY, double maxY, double it, double
   // create recieve buffer + row#
   int RecieveBuffer [width + 1];
 
+  MPI_Status status;
+  int row = 0;
+  int ProcNum = 1;
 
   // start giving processes work
   // height may be less than # of process
-  while(){
+  for(ProcNum = 1; ProcNum < size; ProcNum++){
 
+    if (row < height){
+      MPI_Send(&row, 1, MPI_INT, ProcNum, data_tag, MPI_COMM_WORLD);
+    }else{ // not enough rows to give all processes work
+      MPI_Send(&row, 1, MPI_INT, ProcNum, not_enough_tag, MPI_COMM_WORLD);
+    }
+
+    row++;
   }
 
   // if there are more rows than processes
   // recieve the process and give more work
-  while(){
+  while(row < height){
+    MPI_Recv(RecieveBuffer, width + 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+    MPI_Send(&row, 1, MPI_int, status.MPI_SOURCE, data_tag, MPI_COMM_WORLD);
 
+    //store result into image buffer
+    memcpy(ImageBuffer + (RecieveBuffer[width] * width), RecieveBuffer, width*sizeof(int));
+    row++;
   }
 
   // gather remaining processes 
   // stop giving work to processes
-  while(){
+  for(ProcNum = 1; ProcNum < size; ProcNum++){
+    MPI_Recv(RecieveBuffer, width + 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+    MPI_Send(0,0, MPI_INT, status.MPI_SOURCE, finish_tag, MPI_COMM_WORLD);
+
+    // store result into image buffer 
+    // accounts for processes that may had nothing
+    if (status.MPI_TAG == data_tag){
+      memcpy(ImageBuffer + (RecieveBuffer[width] * width), RecieveBuffer, width*sizeof(int));
+    }
 
   }
 
   // render the image
-
+  gil::rgb8_image_t img(height, width);
+  auto img_view = gil::view(img);
+  int i, j;
+  for ( i = 0; i < height; ++i){
+    for ( j = 0; j < width; ++j){
+      img_view(j,i) = render(ImageBuffer[ (i*width) + j] / 512.0);
+    }
+  }
 
 
   printf("Finished in about %f seconds. \n", MPI_Wtime()-start);
-
+  gil::png_write_view("mandelbrot-ms.png", const_view(img));
 
   return 0;
 }
