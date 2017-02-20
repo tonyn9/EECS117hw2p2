@@ -30,19 +30,19 @@ mpirun -np 1 ./mandelbrot_serial 1000 1000
 echo ""
 echo "=== Starting mandelbrot_susie==="
 echo ""
-echo " threads: 4 "
-# Run the program 
-mpirun -np 4  ./mandelbrot_susie 1000 1000
+# echo " threads: 4 "
+# # Run the program 
+# mpirun -np 4  ./mandelbrot_susie 1000 1000
 
-echo ""
-echo " threads: 16 "
-# Run the program 
-mpirun -np 16  ./mandelbrot_susie 1000 1000
+# echo ""
+# echo " threads: 16 "
+# # Run the program 
+# mpirun -np 16  ./mandelbrot_susie 1000 1000
 
-echo ""
-echo " threads: 32 "
-# Run the program 
-mpirun -np 32  ./mandelbrot_susie 1000 1000
+# echo ""
+# echo " threads: 32 "
+# # Run the program 
+# mpirun -np 32  ./mandelbrot_susie 1000 1000
 
 echo ""
 echo " threads: 64 "
