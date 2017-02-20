@@ -57,6 +57,14 @@ echo " threads: 64 "
 # Run the program 
 mpirun -np 64  ./mandelbrot_susie 1000 1000
 
+echo ""
+echo "=== Starting mandelbrot_ms ==="
+echo ""
+
+echo ""
+echo " threads: 64 "
+# Run the program 
+mpirun -np 64  ./mandelbrot_ms 1000 1000
 
 echo ""
 echo "=== Done! ==="
