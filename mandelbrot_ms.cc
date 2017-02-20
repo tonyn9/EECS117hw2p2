@@ -81,7 +81,13 @@ int slave(double minX, double maxX, double minY, double maxY, double it, double 
 
   double x,y;
 
-  //
+  // get row to work on
+  // work on row
+  // send row to root process
+
+  while(true){
+    
+  }
 
 
 
@@ -91,6 +97,7 @@ int slave(double minX, double maxX, double minY, double maxY, double it, double 
 // gives work out to other process and collects data at the same time
 int master(double minX, double maxX, double minY, double maxY, double it, double jt, int height, int width){
 
+  double start = MPI_Wtime();
 
 
   // create image buffer
@@ -98,6 +105,32 @@ int master(double minX, double maxX, double minY, double maxY, double it, double
 
   // create recieve buffer + row#
   int RecieveBuffer [width + 1];
+
+
+  // start giving processes work
+  // height may be less than # of process
+  while(){
+
+  }
+
+  // if there are more rows than processes
+  // recieve the process and give more work
+  while(){
+
+  }
+
+  // gather remaining processes 
+  // stop giving work to processes
+  while(){
+
+  }
+
+  // render the image
+
+
+
+  printf("Finished in about %f seconds. \n", MPI_Wtime()-start);
+
 
   return 0;
 }
