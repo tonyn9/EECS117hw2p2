@@ -24,47 +24,91 @@ echo "Current directory: ${PWD}"
 echo ""
 echo "=== Starting mandelbrot_serial ==="
 # run the serial program
-mpirun -np 1 ./mandelbrot_serial 1000 1000
+echo ""
+echo " Dimensions : 10000 x 10000 "
+mpirun -np 1 ./mandelbrot_serial 10000 10000
 
 echo ""
 echo "=== Starting mandelbrot_joe ==="
 echo ""
 
 echo ""
-echo " threads: 64 "
+echo " threads: 4 "
+echo " Dimensions : 10000 x 10000 "
 # Run the program 
-mpirun -np 64  ./mandelbrot_joe 1000 1000
+mpirun -np 4  ./mandelbrot_joe 10000 10000
+
+echo ""
+echo " threads: 16 "
+echo " Dimensions : 10000 x 10000 "
+# Run the program 
+mpirun -np 16  ./mandelbrot_joe 10000 10000
+
+echo ""
+echo " threads: 32 "
+echo " Dimensions : 10000 x 10000 "
+# Run the program 
+mpirun -np 32  ./mandelbrot_joe 10000 10000
+
+echo ""
+echo " threads: 64 "
+echo " Dimensions : 10000 x 10000 "
+# Run the program 
+mpirun -np 64  ./mandelbrot_joe 10000 10000
 
 echo ""
 echo "=== Starting mandelbrot_susie ==="
-# echo ""
-# echo " threads: 4 "
-# # Run the program 
-# mpirun -np 4  ./mandelbrot_susie 1000 1000
+echo ""
+echo " threads: 4 "
+echo " Dimensions : 10000 x 10000 "
+# Run the program 
+mpirun -np 4  ./mandelbrot_susie 10000 10000
 
-# echo ""
-# echo " threads: 16 "
-# # Run the program 
-# mpirun -np 16  ./mandelbrot_susie 1000 1000
+echo ""
+echo " threads: 16 "
+echo " Dimensions : 10000 x 10000 "
+# Run the program 
+mpirun -np 16  ./mandelbrot_susie 10000 10000
 
-# echo ""
-# echo " threads: 32 "
-# # Run the program 
-# mpirun -np 32  ./mandelbrot_susie 1000 1000
+echo ""
+echo " threads: 32 "
+echo " Dimensions : 10000 x 10000 "
+# Run the program 
+mpirun -np 32  ./mandelbrot_susie 10000 10000
 
 echo ""
 echo " threads: 64 "
+echo " Dimensions : 10000 x 10000 "
 # Run the program 
-mpirun -np 64  ./mandelbrot_susie 1000 1000
+mpirun -np 64  ./mandelbrot_susie 10000 10000
 
 echo ""
 echo "=== Starting mandelbrot_ms ==="
 echo ""
 
 echo ""
-echo " threads: 64 "
+echo " threads: 4 "
+echo " Dimensions : 10000 x 10000 "
 # Run the program 
-mpirun -np 64  ./mandelbrot_ms 1000 1000
+mpirun -np 4  ./mandelbrot_ms 10000 10000
+
+echo ""
+echo " threads: 16 "
+echo " Dimensions : 10000 x 10000 "
+# Run the program 
+mpirun -np 16  ./mandelbrot_ms 10000 10000
+
+echo ""
+echo " threads: 32 "
+echo " Dimensions : 10000 x 10000 "
+# Run the program 
+mpirun -np 32  ./mandelbrot_ms 10000 10000
+
+echo ""
+echo " threads: 64 "
+echo " Dimensions : 10000 x 10000 "
+# Run the program 
+mpirun -np 64  ./mandelbrot_ms 10000 10000
 
 echo ""
 echo "=== Done! ==="
