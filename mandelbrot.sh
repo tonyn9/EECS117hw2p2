@@ -23,6 +23,42 @@ echo "Current directory: ${PWD}"
 
 echo ""
 echo "=== Starting mandelbrot_serial ==="
+echo ""
+
+echo ""
+echo " Dimensions : 1000 x 1000 "
+mpirun -np 1 ./mandelbrot_serial 1000 1000
+
+echo ""
+echo "=== Starting mandelbrot_joe ==="
+echo ""
+
+echo ""
+echo " threads: 64 "
+echo " Dimensions : 1000 x 1000 "
+# Run the program 
+mpirun -np 64  ./mandelbrot_joe 1000 1000
+
+echo ""
+echo "=== Starting mandelbrot_susie ==="
+echo ""
+echo " threads: 64 "
+echo " Dimensions : 1000 x 1000 "
+# Run the program 
+mpirun -np 64  ./mandelbrot_susie 1000 1000
+
+echo ""
+echo "=== Starting mandelbrot_ms ==="
+echo ""
+
+echo ""
+echo " threads: 64 "
+echo " Dimensions : 1000 x 1000 "
+# Run the program 
+mpirun -np 64  ./mandelbrot_ms 1000 1000
+
+echo ""
+echo "=== Starting mandelbrot_serial ==="
 # run the serial program
 echo ""
 echo " Dimensions : 10000 x 10000 "
@@ -110,41 +146,7 @@ echo " Dimensions : 10000 x 10000 "
 # Run the program 
 mpirun -np 64  ./mandelbrot_ms 10000 10000
 
-echo ""
-echo "=== Starting mandelbrot_serial ==="
-echo ""
 
-echo ""
-echo " Dimensions : 1000 x 1000 "
-mpirun -np 1 ./mandelbrot_serial 1000 1000
-
-echo ""
-echo "=== Starting mandelbrot_joe ==="
-echo ""
-
-echo ""
-echo " threads: 64 "
-echo " Dimensions : 1000 x 1000 "
-# Run the program 
-mpirun -np 64  ./mandelbrot_joe 1000 1000
-
-echo ""
-echo "=== Starting mandelbrot_susie ==="
-echo ""
-echo " threads: 64 "
-echo " Dimensions : 1000 x 1000 "
-# Run the program 
-mpirun -np 64  ./mandelbrot_susie 1000 1000
-
-echo ""
-echo "=== Starting mandelbrot_ms ==="
-echo ""
-
-echo ""
-echo " threads: 64 "
-echo " Dimensions : 1000 x 1000 "
-# Run the program 
-mpirun -np 64  ./mandelbrot_ms 1000 1000
 
 echo ""
 echo "=== Done! ==="
